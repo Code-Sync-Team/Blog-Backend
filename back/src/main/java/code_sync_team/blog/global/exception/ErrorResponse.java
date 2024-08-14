@@ -23,6 +23,7 @@ public record ErrorResponse(
                 .code(errorCode.name())
                 .status(errorCode.defaultHttpStatus().value())
                 .name(errorName)
+                .timestamp(Instant.now())
                 .message(exception.getMessage())
                 .build();
     }
