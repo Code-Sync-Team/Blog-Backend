@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/code_sync_blog?useSSL=false&serverTimeZone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/code_sync_blog?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password : ${DB_PASSWORD}
 
@@ -12,7 +12,8 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
-      dialect: org.hibernate.dialect.MySQLDialect
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 cloud:
   aws:
@@ -24,6 +25,23 @@ cloud:
       auto: false
     region:
       static: ap-northeast-2
+
+springdoc:
+  version: '@project.version@'
+  api-docs:
+    path: /api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-query-params-without-oauth2: true
+    doc-expansion: none
+  paths-to-match:
+    - /api/**
+
 
 
 logging:
