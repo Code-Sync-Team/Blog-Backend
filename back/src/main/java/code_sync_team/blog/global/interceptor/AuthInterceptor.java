@@ -5,7 +5,6 @@ import code_sync_team.blog.global.auth.LoginUser;
 import code_sync_team.blog.global.auth.UserContextHolder;
 import code_sync_team.blog.global.auth.exception.AuthErrorCode;
 import code_sync_team.blog.global.auth.exception.CustomAuthException;
-import code_sync_team.blog.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +28,13 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         String bearerToken = getBearerToken(request);
-        log.info("Token = {}", bearerToken);
+
+        if (bearerToken == null) throw new CustomAuthException(AuthErrorCode.LOGIN_IS_REQUIRED);
 
         if (jwtProvider.verifyToken(bearerToken)) UserContextHolder.setContext(jwtProvider.parseToken(bearerToken));
 
         else {
-            throw new CustomAuthException(AuthErrorCode.LOGIN_IS_REQUIRED);
+            throw new CustomAuthException(AuthErrorCode.TOKEN_EXPIRED);
         }
 
         return true;

@@ -3,9 +3,9 @@ package code_sync_team.blog.global.auth;
 import code_sync_team.blog.user.User;
 
 public class UserContextHolder {
-    private static final ThreadLocal<User> context = new ThreadLocal<>();
+    private static final ThreadLocal<UserDetail> context = new ThreadLocal<>();
 
-    public static void setContext(User user) {
+    public static void setContext(UserDetail user) {
         context.set(user);
     }
 
@@ -13,7 +13,7 @@ public class UserContextHolder {
         context.remove();
     }
 
-    public static User getContext() {
+    public static UserDetail getContext() {
         return context.get();
     }
 }

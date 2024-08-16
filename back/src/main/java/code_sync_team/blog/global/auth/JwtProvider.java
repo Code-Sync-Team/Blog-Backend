@@ -50,7 +50,7 @@ public class JwtProvider {
     }
 
 
-    public User parseToken(String token) {
+    public UserDetail parseToken(String token) {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -61,7 +61,7 @@ public class JwtProvider {
             String userJson = claims.get("user").toString();
 
             User user = objectMapper.readValue(userJson, User.class);
-            return user;
+            return new UserDetail(user);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new UserException(UserErrorCode.DEFAULT);

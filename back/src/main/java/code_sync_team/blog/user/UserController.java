@@ -2,8 +2,11 @@ package code_sync_team.blog.user;
 
 import code_sync_team.blog.global.auth.LoginUser;
 import code_sync_team.blog.global.auth.UserContextHolder;
+import code_sync_team.blog.global.auth.UserDetail;
 import code_sync_team.blog.user.dto.UserJoinRequest;
 import code_sync_team.blog.user.dto.UserLoginRequest;
+import code_sync_team.blog.user.dto.UserLoginResponse;
+import code_sync_team.blog.user.dto.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,15 +52,25 @@ public class UserController {
             description = "로그인에 성공하였습니다."
     )
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequest dto) {
+    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest dto) {
         return new ResponseEntity<>(userService.login(dto), HttpStatus.OK);
     }
 
+
+    @Operation(
+            summary = "내정보",
+            description = "내정보를 불러옵니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "요청에 성공하였습니다."
+    )
     @GetMapping("/me")
     @LoginUser
-    public User getMe() {
-        final User user = UserContextHolder.getContext();
-        log.info("작동 하는겨?");
-        return user;
+    public ResponseEntity<UserResponse> getMe() {
+        final UserDetail userDetail = UserContextHolder.getContext();
+        User user = userService.findById(userDetail.getId());
+
+        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 }

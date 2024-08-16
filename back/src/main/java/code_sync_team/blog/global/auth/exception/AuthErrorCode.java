@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 
 public enum AuthErrorCode implements ErrorCode {
     LOGIN_IS_REQUIRED("로그인이 필요합니다", HttpStatus.FORBIDDEN),
-
+    TOKEN_EXPIRED("토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     ;
 
     private final String message;
