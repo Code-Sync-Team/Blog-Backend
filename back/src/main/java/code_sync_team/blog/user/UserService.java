@@ -30,6 +30,10 @@ public class UserService {
         );
     }
 
+    public boolean findByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     public UserLoginResponse login(UserLoginRequest dto) {
 
         User user = userRepository.findByEmailAndPassword(dto.getEmail(), dto.getPassword())
@@ -47,6 +51,7 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserException(UserErrorCode.MEMBER_NOT_FOUND));
     }
+
 
 
 }

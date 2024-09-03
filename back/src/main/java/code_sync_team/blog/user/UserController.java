@@ -3,10 +3,9 @@ package code_sync_team.blog.user;
 import code_sync_team.blog.global.auth.LoginUser;
 import code_sync_team.blog.global.auth.UserContextHolder;
 import code_sync_team.blog.global.auth.UserDetail;
-import code_sync_team.blog.user.dto.UserJoinRequest;
-import code_sync_team.blog.user.dto.UserLoginRequest;
-import code_sync_team.blog.user.dto.UserLoginResponse;
-import code_sync_team.blog.user.dto.UserResponse;
+import code_sync_team.blog.user.dto.*;
+import code_sync_team.blog.user.exception.UserErrorCode;
+import code_sync_team.blog.user.exception.UserException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -54,6 +53,22 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest dto) {
         return new ResponseEntity<>(userService.login(dto), HttpStatus.OK);
+    }
+
+
+    @Operation(
+            summary = "이메일 중복 확인",
+            description = "이메일 중복을 확인합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "요청에 성공하였습니다."
+    )
+    @PostMapping("/email/check")
+    public ResponseEntity<String> isAvailableEmail(@RequestBody UserEmailCheckRequest dto) {
+        if (userService.findByEmail(dto.getEmail())) throw new UserException(UserErrorCode.USERNAME_ALREADY_EXISTS);
+
+        return new ResponseEntity<>("사용가능한 이메일입니다.", HttpStatus.OK);
     }
 
 
