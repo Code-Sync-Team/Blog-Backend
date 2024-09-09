@@ -1,5 +1,4 @@
-package code_sync_team.blog.post;
-
+package code_sync_team.blog.image;
 
 import code_sync_team.blog.user.User;
 import jakarta.persistence.*;
@@ -9,21 +8,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
 @Getter
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class Post {
+@AllArgsConstructor
+public class Image {
     @Id
     @GeneratedValue
-    private Long id;
-
-    private String title;
-
-    @Lob
-    private String content;
+    public Long id;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
-    private User author;
+    public User user;
+
+    public String url;
+
+
 }

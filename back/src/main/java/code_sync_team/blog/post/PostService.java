@@ -14,7 +14,6 @@ public class PostService {
     private final UserService userService;
 
     public Post create(String title, String content, Long userId) {
-
         User user = userService.findById(userId);
 
         Post post = Post.builder()
@@ -25,4 +24,5 @@ public class PostService {
 
         return postRepository.save(post);
     }
+
 }
