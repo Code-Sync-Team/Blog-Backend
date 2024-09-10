@@ -23,7 +23,7 @@ public class User {
 
     private String name;
 
-    private String nickName;
+    private String nickname;
 
     public Long getId() {
         return id;
@@ -41,7 +41,7 @@ public class User {
         return name;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 }

@@ -25,7 +25,7 @@ public class UserService {
                         .email(dto.getEmail())
                         .password(dto.getPassword())
                         .name(dto.getName())
-                        .nickName(dto.getNickname())
+                        .nickname(dto.getNickname())
                         .build()
         );
     }

@@ -1,6 +1,8 @@
 package code_sync_team.blog.global.service;
 
 import code_sync_team.blog.global.config.S3Config;
+import code_sync_team.blog.image.exception.ImageErrorCode;
+import code_sync_team.blog.image.exception.ImageException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -29,7 +31,8 @@ public class S3Service {
         try {
             amazonS3Client.putObject(bucket, fileName, file.getInputStream(), objectMetadata);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to upload file: " + fileName, e);
+            e.printStackTrace();
+            throw new ImageException(ImageErrorCode.SERVER_ERROR);
         }
 
         return amazonS3Client.getUrl(bucket, fileName).toString();

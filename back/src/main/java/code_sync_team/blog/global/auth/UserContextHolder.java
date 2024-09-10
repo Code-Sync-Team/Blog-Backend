@@ -1,7 +1,5 @@
 package code_sync_team.blog.global.auth;
 
-import code_sync_team.blog.user.User;
-
 public class UserContextHolder {
     private static final ThreadLocal<UserDetail> context = new ThreadLocal<>();
 
