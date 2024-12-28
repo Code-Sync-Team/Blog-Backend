@@ -1,7 +1,6 @@
-package code_sync_team.blog.user.ui.auth;
+package code_sync_team.blog.user.ui.auth.oauth;
 
-import code_sync_team.blog.user.domain.AuthType;
-import code_sync_team.blog.user.ui.auth.support.AuthRedirector;
+import code_sync_team.blog.user.application.auth.oauth.OAuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,17 +14,20 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class UserAuthController {
+public class UserOAuthController {
 
-    private final AuthRedirector authRedirector;
+    private final OAuthService kakaoOAuthService;
 
     @GetMapping("/oauth/login/{provider}")
     public void oAuthLogin(@PathVariable String provider, HttpServletResponse response) {
-        authRedirector.redirect(response, provider);
+        if (provider.equals("kakao")) kakaoOAuthService.redirect(response);
     }
 
     @GetMapping("/login/oauth2/code/{provider}")
-    public void callBack(@PathVariable String provider, @RequestParam("code") String code) throws IOException {
-
+    public void callBack(HttpServletResponse response, @PathVariable String provider, @RequestParam("code") String code) throws IOException {
+        if (provider.equals("kakao")) {
+            String accessToken = kakaoOAuthService.login(code);
+            response.sendRedirect("http://localhost:5173?accessToken=" + accessToken);
+        }
     }
 }

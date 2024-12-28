@@ -48,3 +48,11 @@ logging:
   level:
     org.hibernate.SQL: debug
 
+
+security:
+  kakao:
+    url: https://kauth.kakao.com/oauth/authorize
+    key: fc7d32f457e06accaef6046e4ef2032a
+    redirect_uri: http://localhost:8080/login/oauth2/code/kakao
+
+
